@@ -5,9 +5,8 @@ logging = open('bulk-download-progress.csv')
 
 headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; WOW64; rv:51.0) Gecko/20100101 Firefox/51.0'}
 with open('links.csv') as f:
-    next(f)
     for line in f:
-        title, url, comment, downloads = line.split('|')
+        title, comment, downloads, size_mb, link = line.split('|')
         print('Processing:', title, url, comment, downloads)
         try:
             with requests.Session() as session:

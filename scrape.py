@@ -21,12 +21,15 @@ for b in base:
                 for row in rows:
                     link = row.a.get('href')
 
-                    td_list = list(map(lambda x: x.contents[0].encode('utf-8'),row.find_all('td')))
+                    td_list = list(map(lambda x: x.contents[0], row.find_all('td')))
 
-                    title = row.a.get('title').encode('utf-8')
+                    title = row.a.get('title')
                     comment = td_list[1]
                     downloads = td_list[-2]
-                    all_links.append('|'.join([title, link, comment, downloads]))
+                    size_mb = td_list[3]
+                    if (size_mb.split(' ')[1] == 'KB'):
+                        size_mb = str(float(size_mb.split(' ')[0]) / 1000.0) + ' MB'
+                    all_links.append('|'.join(map(str, [title, comment, downloads, size_mb, link])))
                     print(all_links[-1])
             else:
                 base_done = True
